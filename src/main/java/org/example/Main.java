@@ -9,9 +9,10 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Client> clients = new ArrayList<>(){{
-            add(new Client("Marcos", new int[] { 2, 2, 1, 5, 2 }));
-            add(new Client("Juan", new int[] { 1, 1, 5, 1, 1 }));
-            add(new Client("Arturo", new int[] { 5, 3, 1, 5, 2 }));
+            add(new Client("Cliente 1", new int[] { 2, 2, 1, 5, 2 }));
+            add(new Client("Cliente 2", new int[] { 1, 1, 5, 1, 1 }));
+            add(new Client("Cliente 3", new int[] { 5, 3, 1, 5, 2 }));
+//            add(new Client("Cliente 4", new int[] { 4, 3, 2, 8, 2 }));
         }};
 
         ArrayList<Cashier> cashiers = new ArrayList<>(){{
@@ -19,13 +20,12 @@ public class Main {
             add(new Cashier("Paca"));
             add(new Cashier("Noa"));
         }};
-        int numberThreads = cashiers.size();
 
-        long init = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
-        ExecutorService executor = Executors.newFixedThreadPool(numberThreads);
+        ExecutorService executor = Executors.newFixedThreadPool(4);
         for (int i = 0; i < clients.size(); i ++) {
-            executor.execute(new Shop(clients.get(i), cashiers.get(i), init));
+            executor.execute(new Shop(clients.get(i), cashiers.get(i), startTime));
         }
         executor.shutdown();
     }
