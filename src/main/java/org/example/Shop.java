@@ -17,28 +17,19 @@ public class Shop extends Thread{
         @Override
         public void run() {
 
-             System.out.println("La cajera " + this.cashier.getName() + " COMIENZA A PROCESAR LA COMPRA DEL CLIENTE "
-                    + this.client.getNombre() + " EN EL TIEMPO: "
-                    + (System.currentTimeMillis() - this.initialTime) / 1000
-                    + "seg");
+             System.out.println("La cajera " + this.cashier.getName() + " comienza ha procesar la compra del cliente " + this.client.getNombre() + " a los: " + (System.currentTimeMillis() - this.initialTime) / 1000 + "segundos.");
 
              for (int i = 0; i < this.client.getShoppingBasket().length; i++) {
-                this.esperarXsegundos(client.getShoppingBasket()[i]);
-                System.out.println("Procesado el producto " + (i + 1)
-                        + " del cliente " + this.client.getNombre() + "->Tiempo: "
-                        + (System.currentTimeMillis() - this.initialTime) / 1000
-                        + "seg");
+                this.waitNSeconds(client.getShoppingBasket()[i]);
+                System.out.println("Procesado el producto " + (i + 1) + " del cliente " + this.client.getNombre() + ". Tiempo: " + (System.currentTimeMillis() - this.initialTime) / 1000 + "s");
             }
 
-            System.out.println("La cajera " + this.cashier.getName()  + " HA TERMINADO DE PROCESAR "
-                    + this.client.getNombre() + " EN EL TIEMPO: "
-                    + (System.currentTimeMillis() - this.initialTime) / 1000 + "seg");
-
+            System.out.println("La cajera " + this.cashier.getName()  + " ha terminado de procesar al cliente " + this.client.getNombre() + " a los: " + (System.currentTimeMillis() - this.initialTime) / 1000 + "segundos.");
         }
 
-        private void esperarXsegundos(int segundos) {
+        private void waitNSeconds(int seconds) {
             try {
-                Thread.sleep(segundos * 1000);
+                Thread.sleep(seconds * 1000);
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
