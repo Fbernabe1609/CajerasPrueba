@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="910ca024-198b-434a-bc3d-89942891f4b4" name="Changes" comment="Avance clase">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Cashier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Cashier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Shop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Shop.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +75,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669138155825</updated>
-      <workItem from="1669138157345" duration="5814000" />
+      <workItem from="1669138157345" duration="6520000" />
     </task>
     <task id="LOCAL-00001" summary="Primer commit">
       <created>1669138660659</created>
@@ -101,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669145145341</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Avance clase">
+      <created>1669146924630</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669146924630</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
