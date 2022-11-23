@@ -1,37 +1,68 @@
 package org.example;
 
-public class Shop extends Thread{
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-        private Client client;
+public class Shop {
 
-        private Cashier cashier;
+    static int position = 0;
+    static boolean close = false;
+    static ArrayList<Cashier> cashiers = new ArrayList<>();
+    static ArrayList<Thread> threads = new ArrayList<>();
+    static ArrayList<Client> clients = new ArrayList<>();
 
-        private long initialTime;
+    public static void Shopping() {
+        createClients();
+        int numberCashiers = 3;
+        ExecutorService executor = Executors.newFixedThreadPool(numberCashiers);
+        openShop();
+        chargeCustomers(numberCashiers, executor);
+        if (close) {
+            closeShop();
+        }
+    }
 
-        public Shop(Client client, Cashier cashier, long time){
-            this.client = client;
-            this.cashier = cashier;
-            this.initialTime = time;
+    public static void openShop() {
+        System.out.println("Tienda abierta.");
+    }
+
+    public static void chargeCustomers(int numberCashiers, ExecutorService executor) {
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < numberCashiers; i++) {
+            cashiers.add(new Cashier(String.valueOf(i), clients.get(i), startTime));
         }
 
-        @Override
-        public void run() {
 
-             System.out.println("La cajera " + this.cashier.getCashierName() + " comienza ha procesar la compra del cliente " + this.client.getNombre() + " a los: " + (System.currentTimeMillis() - this.initialTime) / 1000 + "segundos.");
+        for (position = 0; position < numberCashiers; position++) {
+            threads.add(cashiers.get(position));
+        }
+        for (Thread thread : threads) {
+            executor.execute(thread);
+        }
+        executor.shutdown();
+        if (executor.isShutdown() || executor.isTerminated()) {
+            close = true;
+        }
+    }
 
-             for (int i = 0; i < this.client.getShoppingBasket().length; i++) {
-                this.waitTimeSeconds(client.getShoppingBasket()[i]);
-                System.out.println("Procesado el producto " + (i + 1) + " del cliente " + this.client.getNombre() + ". Tiempo: " + (System.currentTimeMillis() - this.initialTime) / 1000 + "s");
+    public static void closeShop() {
+        System.out.println("Cerrando tienda.");
+    }
+
+    public static void createClients() {
+        int numberClients = (int) (Math.random() * 10 + 1);
+        for (int i = 0; i < numberClients; i++) {
+            int randomAmountShoppingBasket = (int) (Math.random() * 10 + 1);
+            ArrayList<Integer> products = new ArrayList<>();
+            for (int j = 0; j < randomAmountShoppingBasket; j++) {
+                products.add(randomProduct());
             }
-
-            System.out.println("La cajera " + this.cashier.getCashierName()  + " ha terminado de procesar al cliente " + this.client.getNombre() + " a los: " + (System.currentTimeMillis() - this.initialTime) / 1000 + "segundos.");
+            clients.add(new Client("Cliente " + i, products));
         }
+    }
 
-        private void waitTimeSeconds(int seconds) {
-            try {
-                Thread.sleep(seconds * 1000L);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-        }
- }
+    public static int randomProduct() {
+        return (int) (Math.random() * 10 + 1);
+    }
+}
