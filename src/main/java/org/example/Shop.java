@@ -8,9 +8,9 @@ import java.util.concurrent.TimeUnit;
 public class Shop {
 
     static int position = 0;
+    static int numberClients;
     static boolean close = false;
     static ArrayList<Cashier> cashiers = new ArrayList<>();
-    static ArrayList<Thread> threads = new ArrayList<>();
     static ArrayList<Client> clients = new ArrayList<>();
 
     public static void Shopping() {
@@ -18,6 +18,7 @@ public class Shop {
         int numberCashiers = 3;
         ExecutorService executor = Executors.newFixedThreadPool(numberCashiers);
         openShop();
+        System.out.println("Número de clientes: " + numberClients + "\n");
         chargeCustomers(numberCashiers, executor);
         if (close) {
             closeShop();
@@ -25,7 +26,7 @@ public class Shop {
     }
 
     public static void openShop() {
-        System.out.println("Tienda abierta.\n");
+        System.out.println("Tienda abierta.");
     }
 
     public static void chargeCustomers(int numberCashiers, ExecutorService executor) {
@@ -34,17 +35,14 @@ public class Shop {
             cashiers.add(new Cashier(String.valueOf(i), clients.get(i), startTime));
         }
         for (position = 0; position < numberCashiers; position++) {
-            threads.add(cashiers.get(position));
-        }
-        for (Thread thread : threads) {
-            executor.execute(thread);
+            executor.execute(cashiers.get(position));
         }
         executor.shutdown();
         try {
             executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
             close = true;
         } catch (InterruptedException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -53,8 +51,7 @@ public class Shop {
     }
 
     public static void createClients() {
-        int numberClients = (int) (Math.random() * 10 + 1);
-        System.out.println(numberClients);
+        numberClients = (int) (Math.random() * 10 + 1);
         for (int i = 0; i < numberClients; i++) {
             int randomAmountShoppingBasket = (int) (Math.random() * 10 + 1);
             ArrayList<Integer> products = new ArrayList<>();
