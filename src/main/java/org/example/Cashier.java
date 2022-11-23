@@ -50,7 +50,7 @@ public class Cashier extends Thread {
         if (Shop.position < Shop.clients.size()) {
             this.client = Shop.clients.get(Shop.position);
             Shop.position = Shop.position + 1;
-            run();
+            start();
         }
     }
 
