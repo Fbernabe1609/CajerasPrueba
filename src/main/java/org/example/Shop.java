@@ -5,53 +5,70 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Shop {
+public class Shop implements Emojis {
 
-    static int position = 0;
-    static int numberClients;
+    static int position = 2;
+    static int numberClients = 0;
     static boolean close = false;
     static ArrayList<Cashier> cashiers = new ArrayList<>();
     static ArrayList<Client> clients = new ArrayList<>();
 
     public static void Shopping() {
-        createClients();
+
         int numberCashiers = 3;
         ExecutorService executor = Executors.newFixedThreadPool(numberCashiers);
+
+        createClients();
         openShop();
+
         System.out.println("Número de clientes: " + numberClients + "\n");
+
         chargeCustomers(numberCashiers, executor);
+
         if (close) {
+
             closeShop();
         }
     }
 
     public static void openShop() {
-        System.out.println("Tienda abierta.");
+
+        System.out.println(PARTY_FACE + "Tienda abierta" + PARTY_FACE + ".");
     }
 
     public static void chargeCustomers(int numberCashiers, ExecutorService executor) {
+
         long startTime = System.currentTimeMillis();
+
         for (int i = 0; i < numberCashiers; i++) {
+
             cashiers.add(new Cashier(String.valueOf(i), clients.get(i), startTime));
         }
-        for (position = 0; position < numberCashiers; position++) {
-            executor.execute(cashiers.get(position));
+
+        for (int i = 0; i < numberCashiers; i++) {
+
+            executor.execute(cashiers.get(i));
         }
+
         executor.shutdown();
+
         try {
-            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-            close = true;
+
+            close = executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
+
             System.out.println(e.getMessage());
         }
     }
 
     public static void closeShop() {
-        System.out.println("\nCerrando tienda.");
+
+        System.out.println("\n" + LOUDLY_CRYING_FACE + "Tienda cerrada" + LOUDLY_CRYING_FACE + ".");
     }
 
     public static void createClients() {
-        numberClients = (int) (Math.random() * 10 + 1);
+
+        totalNumberClients();
         for (int i = 0; i < numberClients; i++) {
             int randomAmountShoppingBasket = (int) (Math.random() * 10 + 1);
             ArrayList<Integer> products = new ArrayList<>();
@@ -62,7 +79,15 @@ public class Shop {
         }
     }
 
+    public static void totalNumberClients() {
+
+        while (numberClients < 3) {
+            numberClients = (int) (Math.random() * ((10 - 3 + 1) + 3));
+        }
+    }
+
     public static int randomProduct() {
+
         return (int) (Math.random() * 10 + 1);
     }
 }
