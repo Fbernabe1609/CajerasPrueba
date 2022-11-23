@@ -43,14 +43,14 @@ public class Cashier extends Thread {
 
         for (int i = 0; i < this.client.getShoppingBasket().size(); i++) {
             this.waitTimeSeconds(client.getShoppingBasket().get(i));
-            System.out.println("Procesado el producto " + (i + 1) + " del cliente " + this.client.getNombre() + ". Tiempo: " + (System.currentTimeMillis() - this.waitTime) / 1000 + "s");
+            System.out.println("La cajera " + this.cashierName + " ha procesado el producto " + (i + 1) + " del cliente " + this.client.getNombre() + ". Tiempo: " + (System.currentTimeMillis() - this.waitTime) / 1000 + "s");
         }
 
         System.out.println("La cajera " + this.cashierName + " ha terminado de procesar al cliente " + this.client.getNombre() + " a los: " + (System.currentTimeMillis() - this.waitTime) / 1000 + " segundos.");
         if (Shop.position < Shop.clients.size()) {
             this.client = Shop.clients.get(Shop.position);
             Shop.position = Shop.position + 1;
-            start();
+            run();
         }
     }
 

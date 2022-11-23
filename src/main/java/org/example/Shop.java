@@ -3,6 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Shop {
 
@@ -24,7 +25,7 @@ public class Shop {
     }
 
     public static void openShop() {
-        System.out.println("Tienda abierta.");
+        System.out.println("Tienda abierta.\n");
     }
 
     public static void chargeCustomers(int numberCashiers, ExecutorService executor) {
@@ -32,8 +33,6 @@ public class Shop {
         for (int i = 0; i < numberCashiers; i++) {
             cashiers.add(new Cashier(String.valueOf(i), clients.get(i), startTime));
         }
-
-
         for (position = 0; position < numberCashiers; position++) {
             threads.add(cashiers.get(position));
         }
@@ -41,17 +40,21 @@ public class Shop {
             executor.execute(thread);
         }
         executor.shutdown();
-        if (executor.isShutdown() || executor.isTerminated()) {
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
             close = true;
+        } catch (InterruptedException e) {
+            System.out.println(e);
         }
     }
 
     public static void closeShop() {
-        System.out.println("Cerrando tienda.");
+        System.out.println("\nCerrando tienda.");
     }
 
     public static void createClients() {
         int numberClients = (int) (Math.random() * 10 + 1);
+        System.out.println(numberClients);
         for (int i = 0; i < numberClients; i++) {
             int randomAmountShoppingBasket = (int) (Math.random() * 10 + 1);
             ArrayList<Integer> products = new ArrayList<>();
